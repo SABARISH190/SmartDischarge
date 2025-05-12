@@ -1,0 +1,121 @@
+<!-- Add Patient Modal -->
+<div id="addPatientModal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+    <div class="fixed inset-0 bg-black bg-opacity-50 transition-opacity" aria-hidden="true" id="modalOverlay"></div>
+    <div class="relative w-full max-w-2xl p-6 mx-4 overflow-y-auto bg-white rounded-lg shadow-2xl dark:bg-gray-800 max-h-[90vh]">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Add New Patient</h3>
+            <button type="button" class="text-gray-400 hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white transition-colors duration-200" onclick="closeAddPatientModal()" aria-label="Close">
+                <i class="fas fa-times text-2xl"></i>
+                <span class="sr-only">Close modal</span>
+            </button>
+        </div>
+        
+        <form id="add_patient_form" action="/add_patient" method="POST" class="space-y-4" enctype="multipart/form-data">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label for="patient_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Patient ID *</label>
+                    <input type="number" id="patient_id" name="patient_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white transition-colors duration-200" required>
+                    <div class="text-xs text-gray-500 mt-1">Leave empty to auto-generate an ID</div>
+                </div>
+                <div>
+                    <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Full Name *</label>
+                    <input type="text" id="name" name="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white transition-colors duration-200" required>
+                </div>
+                <div>
+                    <label for="sex" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sex *</label>
+                    <select id="sex" name="sex" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white transition-colors duration-200" required>
+                        <option value="">Select</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="age" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Age</label>
+                    <div class="relative">
+                        <input type="number" id="age" name="age" min="0" max="120" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white transition-colors duration-200">
+                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-400">
+                            years
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <label for="state" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">State</label>
+                    <input type="text" id="state" name="state" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white transition-colors duration-200">
+                </div>
+                <div>
+                    <label for="general_health" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">General Health *</label>
+                    <select id="general_health" name="general_health" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white transition-colors duration-200" required>
+                        <option value="">Select</option>
+                        <option value="Excellent">Excellent</option>
+                        <option value="Very good">Very good</option>
+                        <option value="Good">Good</option>
+                        <option value="Fair">Fair</option>
+                        <option value="Poor">Poor</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="has_chronic_condition" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Chronic Condition *</label>
+                    <select id="has_chronic_condition" name="has_chronic_condition" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white transition-colors duration-200" required>
+                        <option value="">Select</option>
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="hospital_stay_duration" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hospital Stay (days) *</label>
+                    <div class="relative">
+                        <input type="number" id="hospital_stay_duration" name="hospital_stay_duration" min="1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white transition-colors duration-200" required>
+                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-400">
+                            days
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <label for="risk_category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Risk Category *</label>
+                    <select id="risk_category" name="risk_category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white transition-colors duration-200" required>
+                        <option value="">Select</option>
+                        <option value="Low">Low</option>
+                        <option value="Medium">Medium</option>
+                        <option value="High">High</option>
+                        <option value="Obese">Obese</option>
+                        <option value="Overweight">Overweight</option>
+                        <option value="Normal">Normal</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="doctor_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Doctor Name</label>
+                    <input type="text" id="doctor_name" name="doctor_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white transition-colors duration-200" placeholder="Dr. Anita Sharma">
+                </div>
+                <div>
+                    <label for="allergies" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Allergies</label>
+                    <input type="text" id="allergies" name="allergies" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white transition-colors duration-200" placeholder="None">
+                </div>
+                <div class="md:col-span-2">
+                    <label for="chief_complaint" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Chief Complaint</label>
+                    <textarea id="chief_complaint" name="chief_complaint" rows="2" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white transition-colors duration-200"></textarea>
+                </div>
+                <div>
+                    <label for="admission_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Admission Date</label>
+                    <input type="date" id="admission_date" name="admission_date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white transition-colors duration-200">
+                </div>
+                <div>
+                    <label for="discharge_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Discharge Date</label>
+                    <input type="date" id="discharge_date" name="discharge_date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white transition-colors duration-200">
+                </div>
+            </div>
+            
+            <div class="flex justify-end space-x-3 pt-4 border-t border-gray-200 dark:border-gray-700 mt-6">
+                <button type="button" onclick="closeAddPatientModal()" class="text-gray-700 bg-white hover:bg-gray-50 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:bg-gray-600 transition-colors duration-200">
+                    <i class="fas fa-times mr-2"></i>Cancel
+                </button>
+                <button type="submit" class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition-colors duration-200 flex items-center justify-center min-w-[120px]">
+                    <i class="fas fa-save mr-2"></i>Save Patient
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
